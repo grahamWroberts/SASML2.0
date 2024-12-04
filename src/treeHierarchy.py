@@ -3,20 +3,6 @@ from sklearn.svm import SVC
 import json
 from joblib import dump, load
 
-
-
-def classifier_from_json(J):
-    if J['type'] == 'svc':
-        K = J['kernel']
-        classifier = SVC(C = J['c'],
-        gamma = J['gamma'],
-        kernel = K['type'],
-        degree = K['degree'] if K['type'] == 'polynomial' else 1,
-        coef0 = J['coeff0'])
-    else:
-        classifier = None
-    return(classifier)
-
 class treeHierarchy:
 
     def _init_(self):
@@ -58,7 +44,10 @@ class treeHierarchy:
         return
 
     def predict(self, X):
-        if not getattr(self, 'terminal', False):
+        print(X.shape)
+        if X.shape[0] == 0:
+            y = np.zeros(0)
+        elif not getattr(self, 'terminal', False):
             print('predicting [%s] vs [%s]'%(' '.join(self.classA), ' '.join(self.classB)))
             inds = np.arange(X.shape[0])
             temp_y = self.entity.predict(X)
@@ -98,5 +87,14 @@ class treeHierarchy:
             self.classA = J['classLeft']
             self.classB = J['classRight']
 
-
-
+def classifier_from_json(J):
+    if J['type'] == 'svc':
+        K = J['kernel']
+        classifier = SVC(C = J['c'],
+        gamma = J['gamma'],
+        kernel = K['type'],
+        degree = K['degree'] if K['type'] == 'polynomial' else 1,
+        coef0 = J['coeff0'])
+    else:
+        classifier = None
+    return(classifier)
