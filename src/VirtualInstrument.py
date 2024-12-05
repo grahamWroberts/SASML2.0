@@ -24,11 +24,11 @@ class VirtualInstrument:
         if type(filenames) == list:
             for fn in filenames:
                q, I, dq, dI = extract_Iq(fn)
-               self.add_configuration(q,I,dI,dq)
+               self.add_configuration(q,I,dI,dq, reset=False)
 
         else:
             q, I, dq, dI = extract_Iq(filenames)
-            self.add_configuration(q,I,dI,dq)
+            self.add_configuration(q,I,dI,dq, rest=False)
 
 
     def add_configuration(self,q,I,dI,dq,reset=True):

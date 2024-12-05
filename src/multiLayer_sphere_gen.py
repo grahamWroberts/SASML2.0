@@ -4,6 +4,7 @@ import sasmodels.data
 import sasmodels.core
 import sasmodels.direct_model
 import VirtualInstrument
+from matplotlib import pyplot as plt
 
 
 def random_MLS(count):
@@ -28,11 +29,26 @@ def map_MLS(indict):
 
 if __name__ == "__main__":
    sg = SG.ParamGenerator(random_MLS, map_MLS)
-   t_list, n_list = sg.sample(5)
+   t_list, n_list = sg.sample(10)
    print(n_list)
    model_name = 'multilayer_vesicle'
    reference_files = ["../../libal_sas/reference_sans/%s"%(s) for s in ["low_q.ABS", "med_q.ABS", "high_q.ABS"]]
    vi = VirtualInstrument.VirtualInstrument()
    vi.add_references(reference_files)
+   calcs, sds = vi.construct_calculators(model_name)
+   curves = [vi.generate(model_name, kw, calcs, sds)[0] for kw in n_list]
+   #print(curves[0])
+
+
+
+
+
+   plt.xscale('log')
+   plt.yscale('log')
+   for c in curves:
+       inds = c.index
+       plt.plot(c.index, c[:])
+   plt.show()
+
    
 
