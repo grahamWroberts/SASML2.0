@@ -1,0 +1,109 @@
+{
+   "classifier": {
+      "type": "svc",
+      "c": 100.0,
+      "gamma": 0.05,
+      "kernel": {
+         "type": "rbf"
+      },
+      "coeff0": 1.0
+   },
+   "classLeft": [
+      "power_law_cylinder",
+      "power_law_mass_fractal",
+      "power_law_surface_fractal",
+      "flat"
+   ],
+   "classRight": [
+      "sphere",
+      "unified"
+   ],
+   "left": {
+      "classifier": {
+         "type": "svc",
+         "c": 10.0,
+         "gamma": 0.5,
+         "kernel": {
+            "type": "rbf"
+         },
+         "coeff0": 1.0
+      },
+      "classLeft": [
+         "power_law_cylinder",
+         "flat"
+      ],
+      "classRight": [
+         "power_law_surface_fractal",
+         "power_law_mass_fractal"
+      ],
+      "left": {
+         "classifier": {
+            "type": "svc",
+            "c": 10000.0,
+            "gamma": 0.005,
+            "kernel": {
+               "type": "rbf"
+            },
+            "coeff0": 1.0
+         },
+         "classLeft": [
+            "power_law_cylinder"
+         ],
+         "classRight": [
+            "flat"
+         ],
+         "left": {
+            "class": "power_law_cylinder"
+         },
+         "right": {
+            "class": "flat"
+         }
+      },
+      "right": {
+         "classifier": {
+            "type": "svc",
+            "c": 100.0,
+            "gamma": 0.005,
+            "kernel": {
+               "type": "rbf"
+            },
+            "coeff0": 1.0
+         },
+         "classLeft": [
+            "power_law_mass_Fractal"
+         ],
+         "classRight": [
+            "power_law_surface_fractal"
+         ],
+         "left": {
+            "class": "power_law_mass_fractal"
+         },
+         "right": {
+            "class": "power_law_surface_fractal"
+         }
+      }
+   },
+   "right": {
+      "classifier": {
+         "type": "svc",
+         "c": 10.0,
+         "gamma": 0.5,
+         "kernel": {
+            "type": "rbf"
+         },
+         "coeff0": 1.0
+      },
+      "classLeft": [
+         "sphere"
+      ],
+      "classRight": [
+         "unified"
+      ],
+      "left": {
+         "class": "sphere"
+      },
+      "right": {
+         "class": "unified"
+      }
+   }
+}

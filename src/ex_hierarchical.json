@@ -1,0 +1,114 @@
+{
+   "classifier": {
+      "type": "svc",
+      "c": 100.0,
+      "gamma": 0.05,
+      "kernel": {
+         "type": "rbf"
+      },
+      "coeff0": 1.0
+   },
+   "classLeft": [
+      "cylinder",
+      "disk",
+      "cs_cylinder",
+      "cs_disk"
+   ],
+   "classRight": [
+      "sphere",
+      "cs_sphere"
+   ],
+   "left": {
+      "classifier": {
+         "type": "svc",
+         "c": 10.0,
+         "gamma": 0.5,
+         "kernel": {
+            "type": "rbf"
+         },
+         "coeff0": 1.0
+      },
+      "classLeft": [
+         "cylinder",
+         "disk"
+      ],
+      "classRight": [
+         "cs_cylinder",
+         "cs_disk"
+      ],
+      "left": {
+         "classifier": {
+            "type": "svc",
+            "c": 10000.0,
+            "gamma": 0.005,
+            "kernel": {
+               "type": "rbf"
+            },
+            "coeff0": 1.0
+         },
+         "classLeft": [
+            "cylinder"
+         ],
+         "classRight": [
+            "disk"
+         ],
+         "left": {
+            "class": "cylinder"
+         },
+         "right": {
+            "class": "disk"
+         },
+         "jobfile": "classifier_3.joblib"
+      },
+      "right": {
+         "classifier": {
+            "type": "svc",
+            "c": 100.0,
+            "gamma": 0.005,
+            "kernel": {
+               "type": "rbf"
+            },
+            "coeff0": 1.0
+         },
+         "classLeft": [
+            "cs_cylinder"
+         ],
+         "classRight": [
+            "cs_disk"
+         ],
+         "left": {
+            "class": "cs_cylinder"
+         },
+         "right": {
+            "class": "cs_disk"
+         },
+         "jobfile": "classifier_4.joblib"
+      },
+      "jobfile": "classifier_2.joblib"
+   },
+   "right": {
+      "classifier": {
+         "type": "svc",
+         "c": 10.0,
+         "gamma": 0.5,
+         "kernel": {
+            "type": "rbf"
+         },
+         "coeff0": 1.0
+      },
+      "classLeft": [
+         "sphere"
+      ],
+      "classRight": [
+         "cs_sphere"
+      ],
+      "left": {
+         "class": "sphere"
+      },
+      "right": {
+         "class": "cs_sphere"
+      },
+      "jobfile": "classifier_1.joblib"
+   },
+   "jobfile": "classifier_0.joblib"
+}

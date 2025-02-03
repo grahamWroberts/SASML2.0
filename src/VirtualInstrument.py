@@ -7,7 +7,10 @@ import sasmodels.core
 import sasmodels.direct_model
 
 def extract_Iq(fn):
-    df = pd.read_csv(fn, delim_whitespace=True)
+    try:
+       df = pd.read_csv(fn)
+    except:
+       df = pd.read_csv(fn, delim_whitespace=True)
     print(df.columns)
     q = list(df.q)
     I = list(df.I)
@@ -77,6 +80,7 @@ class VirtualInstrument:
         sasdatas = []
         for sasdata in self.reference_data:
             model_info    = sasmodels.core.load_model_info(model_name)
+            print(sasdata)
             kernel        = sasmodels.core.build_model(model_info)
             calculator    = sasmodels.direct_model.DirectModel(sasdata,kernel)
             calculators.append(calculator)

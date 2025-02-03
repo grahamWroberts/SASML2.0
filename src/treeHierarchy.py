@@ -24,6 +24,8 @@ class treeHierarchy:
         self.right = content
 
     def fit(self, X, y):
+        print("fitting ")
+        print(np.unique(y))
         if not getattr(self, 'terminal', False):
            print('Training [%s] vs. [%s]'%(' '.join(self.classA), ' '.join(self.classB)))
            templabels = np.zeros(X.shape[0])

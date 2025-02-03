@@ -1,0 +1,67 @@
+{
+   "classifier": {
+      "type": "svc",
+      "c": 1.0,
+      "gamma": "auto",
+      "kernel": {
+         "type": "rbf"
+      },
+      "coeff0": 1.0
+   },
+   "classLeft": [
+      "cylinder",
+      "disk"
+   ],
+   "classRight": [
+      "core_shell_sphere",
+      "multilayer_vesicle"
+   ],
+   "left": {
+      "classifier": {
+         "type": "svc",
+         "c": 10000.0,
+         "gamma": "auto",
+         "kernel": {
+            "type": "rbf"
+         },
+         "coeff0": 1.0
+      },
+      "classLeft": [
+         "cylinder"
+      ],
+      "classRight": [
+         "disk"
+      ],
+      "left": {
+         "class": "cylinder"
+      },
+      "right": {
+         "class": "disk"
+      }
+   },
+   "right": {
+      "classifier": {
+         "type": "svc",
+         "c": 10.0,
+         "gamma": "auto",
+         "kernel": {
+            "type": "rbf"
+         },
+         "coeff0": 1.0
+      },
+      "classLeft": [
+         "multilayer_vesicle"
+      ],
+      "classRight": [
+         "core_shell_sphere"
+      ],
+      "left": {
+         "class": "multilayer_vesicle"
+      },
+      "right": {
+         "class": "core_shell_sphere"
+      }
+   }
+}
+
+
