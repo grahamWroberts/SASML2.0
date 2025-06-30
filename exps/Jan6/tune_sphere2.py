@@ -36,15 +36,15 @@ def kfold(X, y, classifier, fold_inds):
 
 
 def main():
-    X = np.log10(np.loadtxt('../../src/exampleX.csv', delimiter=',')+0.001)
-    y = np.loadtxt('../../src/exampley.csv', dtype=str)
+    X = np.log10(np.loadtxt('../../src/smallX_trimmed.csv', delimiter=',')+0.001)
+    y = np.loadtxt('../../src/smally_trimmed.csv', dtype=str)
     outfile = open('performance2.csv', 'w')
     valid = np.append(np.where(y=='core_shell_sphere')[0], np.where(y=='multilayer_vesicle')[0])
     X = X[valid]
     y = y[valid]
     newlabs = np.array([0 if l in ['core_shell_sphere'] else 1 for l in y])
     print(newlabs)
-    Cs = [10.0, 100.0, 1000.0]
+    Cs = [1., 10.0, 100.0, 1000.0, 10000]
     gammas = ['auto']
     kernels = ['rbf']
     coeff0s = [0, 1]
@@ -54,12 +54,14 @@ def main():
             for kernel in kernels:
                 for coeff0 in coeff0s:
                     paramlist += [{'C':C, "gamma":gamma, "kernel":kernel, "coeff0": coeff0}]
+                    for degree in [2,3,4]:
+                        paramlist += [{'C':C, "gamma":gamma, "kernel":"poly", "coeff0": coeff0, "degree":degree}]
     print(paramlist)
     fold_inds = make_folds(newlabs)
     for params in paramlist:
        classifier = SVC(C=params["C"], gamma = params["gamma"], kernel = params["kernel"], coef0 = params["coeff0"])
        acc = kfold(X,newlabs,classifier,fold_inds)
-       outstring = "%0.2e %s %s %d %f"%(params["C"], params["gamma"], params["kernel"], params["coeff0"], acc)
+       outstring = "%0.2e %s %s %d %f"%(params["C"], params["gamma"], params["kernel"] if params["kernel"] == "rbf" else "poly-%d"%(params["degree"]), params["coeff0"], acc)
        print(outstring)
        outfile.write('%s\n'%(outstring))
 

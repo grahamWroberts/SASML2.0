@@ -8,7 +8,7 @@ import json
 from matplotlib import pyplot as plt
 
 targets = ['cylinder', 'disk', 'multilayer_vesicle', 'core_shell_cylinder']
-infile = open("4_class_w_multilayer.json")
+infile = open("4_class_w_multilayer_new.json")
 jstr = infile.read()
 inj = json.loads(jstr)
 tree = th.treeHierarchy()

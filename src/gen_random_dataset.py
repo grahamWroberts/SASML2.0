@@ -21,7 +21,7 @@ def random_MLS(count):
                     "radius": radii[i],
                     "thick_shell": shell_thick[i],
                     "thick_solvent": water_thick[i],
-                    "background": background[i],
+                    "background": 10**background[i],
                     "sld_solvent": sld_solvent[i],
                     "scale": scale[i],
                     "sld": sld[i]} for i in range(count)]
@@ -36,7 +36,7 @@ def random_cylinder(count):
     scale = np.random.uniform(0.1, 1.0, count)
     return_list = [{"radius":radii[i],
                     "length":2*radii[i]+length[i],
-                    "background": background[i],
+                    "background": 10**background[i],
                     "sld_solvent": sld_solvent[i],
                     "scale": scale[i],
                     "sld":sld[i]} for i in range(count)]
@@ -51,7 +51,7 @@ def random_disk(count):
     sld = np.random.uniform(0.5, 5.0, count)
     return_list = [{"radius":length[i]+radii[i],
                     "length":length[i],
-                    "background": background[i],
+                    "background": 10**background[i],
                     "sld_solvent": sld_solvent[i],
                     "scale": scale[i],
                     "sld":sld[i]} for i in range(count)]
@@ -66,7 +66,7 @@ def random_cs_sphere(count):
     sld= np.random.uniform(0.5, 5.0, count)
     return_list = [{"radius": radii[i],
                     "thickness": shell_thick[i],
-                    "background": background[i],
+                    "background": 10**background[i],
                     "sld_solvent": sld_solvent[i],
                     "scale": scale[i],
                     "sld_core": sld[i]} for i in range(count)]
@@ -146,7 +146,7 @@ if __name__ == "__main__":
       calcs, sds = vi.construct_calculators(model_name)
       t_list, n_list = generators[t].sample(count)
       print(t)
-      curves = [vi.generate(model_name, kw, calcs, sds)[0] for kw in n_list]
+      curves = [vi.generate(model_name, kw, calcs, sds)[1] for kw in n_list]
       test_curves += curves
       test_labels += [t for i in range(count)]
    test_curves = np.array(test_curves)

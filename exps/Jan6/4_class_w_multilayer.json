@@ -1,7 +1,7 @@
 {
    "classifier": {
       "type": "svc",
-      "c": 1.0,
+      "c": 1000.0,
       "gamma": "auto",
       "kernel": {
          "type": "rbf"
@@ -42,7 +42,7 @@
    "right": {
       "classifier": {
          "type": "svc",
-         "c": 10.0,
+         "c": 1.0,
          "gamma": "auto",
          "kernel": {
             "type": "rbf"

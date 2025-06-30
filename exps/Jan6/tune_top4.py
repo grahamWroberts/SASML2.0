@@ -46,8 +46,8 @@ def main():
     outfile = open('performance.csv', 'w')
     newlabs = np.array([0 if l in ['cylinder', 'disk'] else 1 for l in y])
     print(newlabs)
-    Cs = [10.0, 100.0, 1000.0]
-    gammas = ['auto']
+    Cs = [1., 10.0, 100.0, 1000.0, 10000.0]
+    gammas = ['auto', 'scale']
     kernels = ['rbf']
     coeff0s = [0, 1]
     paramlist = []
@@ -56,6 +56,8 @@ def main():
             for kernel in kernels:
                 for coeff0 in coeff0s:
                     paramlist += [{'C':C, "gamma":gamma, "kernel":kernel, "coeff0": coeff0}]
+                    for degree in [2,3,4]:
+                        paramlist += [{'C':C, "gamma":gamma, "kernel":"poly", "coeff0": coeff0, "degree":degree}]
     print(paramlist)
     fold_inds = make_folds(newlabs)
     for params in paramlist:

@@ -5,12 +5,13 @@ import xarray as xr
 import sasmodels.data
 import sasmodels.core
 import sasmodels.direct_model
+from matplotlib import pyplot as plt
 
 def extract_Iq(fn):
     try:
-       df = pd.read_csv(fn)
-    except:
        df = pd.read_csv(fn, delim_whitespace=True)
+    except:
+       df = pd.read_csv(fn)
     print(df.columns)
     q = list(df.q)
     I = list(df.I)
@@ -51,16 +52,18 @@ class VirtualInstrument:
         I_list = []
         dI_list = []
         for sasdata,calc in zip(sasdatas,calculators):
+            print(calc)
             I_noiseless = calc(**kw)
             
-            I_noiseless[np.where(np.less(I_noiseless, 0.001))[0]] = 0.001
+            #I_noiseless[np.where(np.less(I_noiseless, 0.001))[0]] = 0.001
+            I_noiseless += 0.001
             dI_model = sasdata.dy*np.sqrt(I_noiseless/sasdata.y)
             mean_var= np.mean(dI_model*dI_model/I_noiseless)
             # dI = sasdata.dy*np.sqrt(noise*noise/mean_var)
             dI = sasdata.dy*self.noise/mean_var
             
             I = np.random.normal(loc=I_noiseless,scale=dI)
-            I[np.where(np.less(I, 0.001))[0]] = 0.001
+            #I[np.where(np.less(I, 0.001))[0]] = 0.001
             
             I_noiseless = pd.Series(data=I_noiseless,index=sasdata.x)
             I = pd.Series(data=I,index=sasdata.x)
