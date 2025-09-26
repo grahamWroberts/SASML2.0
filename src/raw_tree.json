@@ -1,0 +1,40 @@
+{
+   "classA": [
+      "flexible_cylinder_elliptical",
+      "disk"
+   ],
+   "classB": [
+      "core_shell_sphere",
+      "multilayer_vesicle"
+   ],
+   "left": {
+      "classA": [
+         "flexible_cylinder_elliptical"
+      ],
+      "classB": [
+         "disk"
+      ],
+      "left": {
+         "class": "flexible_cylinder_elliptical"
+      },
+      "right": {
+         "class": "disk"
+      }
+   },
+   "right": {
+      "classA": [
+         "multilayer_vesicle"
+      ],
+      "classB": [
+         "core_shell_sphere"
+      ],
+      "left": {
+         "class": "multilayer_vesicle"
+      },
+      "right": {
+         "class": "core_shell_sphere"
+      }
+   }
+}
+
+

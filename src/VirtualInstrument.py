@@ -51,10 +51,9 @@ class VirtualInstrument:
         I_noiseless_list = []
         I_list = []
         dI_list = []
-        for sasdata,calc in zip(sasdatas,calculators):
-            print(calc)
-            I_noiseless = calc(**kw)
-            
+        for sasdata, calc in zip(sasdatas,calculators):
+            #I_noiseless = calc(**kw)
+            I_noiseless = calc(kw)
             #I_noiseless[np.where(np.less(I_noiseless, 0.001))[0]] = 0.001
             I_noiseless += 0.001
             dI_model = sasdata.dy*np.sqrt(I_noiseless/sasdata.y)
@@ -78,14 +77,17 @@ class VirtualInstrument:
         dI          = pd.concat(dI_list).sort_index()
         return I,I_noiseless,dI
 
-    def construct_calculators(self, model_name):
+    def construct_calculators(self, model_name, model_info = None, model = None):
         calculators = []
         sasdatas = []
+        if model_info is None:
+           model_info    = sasmodels.core.load_model_info(model_name)
+        if model is None:
+           model= sasmodels.core.load_model(model_name)
         for sasdata in self.reference_data:
-            model_info    = sasmodels.core.load_model_info(model_name)
-            print(sasdata)
-            kernel        = sasmodels.core.build_model(model_info)
-            calculator    = sasmodels.direct_model.DirectModel(sasdata,kernel)
+            kernel = model.make_kernel([sasdata.x])
+            calculator    = (lambda k: (lambda x: sasmodels.direct_model.call_kernel(k, x)))(kernel)
+            #calculator    = sasmodels.direct_model.DirectModel(sasdata,kernel)
             calculators.append(calculator)
             sasdatas.append(sasdata)
         return(calculators, sasdatas)
